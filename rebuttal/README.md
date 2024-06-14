@@ -2,24 +2,19 @@
 
 ## Towards Context-Aware Traffic Classification via Time-Wavelet Fusion Network
 
-### To Reviewer\#A\#C: About Manuscript Presentation
+### To Reviewer\#A\#C: Contextual Traffic Representation and Motivation Example
 
-For the context information representation, it will be modeled by the cross-attention mechanism combined with FoI, as described in IV.D and Figure 6. Intuitively, the context information will eventually affect different attention (as shown in Figure 4) weights to help distinguish flow (to be detected), to cope with such as exhaustion attack detection problem. 
+We thank the reviewers for their suggestions on the presentation of our manuscript. **For the context information representation, it will be modeled by the cross-attention mechanism combined with FoI**, as described in IV.D and Figure 6. Intuitively, **the context information will eventually affect different attention weights** (as shown in Figure 4) to help distinguish flow (to be detected), to cope with such as exhaustion attack detection problem.
 
-We thank the reviewers for their suggestions on the presentation of the manuscript, including giving an example in the Abstract, reshaping the presentation of the wavelet design, presenting a running example throughout the design section, and some minor typos. We will improve and polish them. 
+We will add the motivation example of Empty Connection Flood DDoS Attack in Abstract and its detailed illustration in Section Ⅱ in the revision. Meanwihle，we will include a schematic diagram of the adopted wavelet transform process in the wavelet design section of the revised version of our paper to help readers better understand our design.
 
-### To Reviewer\#B: Details of Dataset
+### To Reviewer\#B\#D: Details of Dataset
 
-The number of labels for IDS, CrossNet, VPN, and AndMal are 8, 20, 13, and 5. Some datasets (such as IDS and VPN) are indeed a bit old, but they are still frequently used in recent works (e.g., CCS2021\_nPrint, USENIX2023\_Rosetta, WWW2023\_TFE-GNN, COSE2023\_Adaptive, KDD2022\_FlowFormer), so we also consider them for evaluation. 
-
-### To Reviewer\#D: About Manuscript Writing
-
-We are grateful to reviewer D for constructive comments on the writing. 
-Empty connection floods are DDoS attacks designed to saturate the targeted open port’s sockets, its attack traffic is no different from the normal three-way handshake (refer to https://kb.mazebolt.com/knowledgebase/empty-connection-flood/). We will reorganize the section II into Backound/Preliminary knowledge for a better presentation. We will reshape the presentation of the adversary model and assumptions and avoid using confusing sentences. Intrusion detection includes both benign traffic and attack traffic. VPN dataset does not involve attack traffic. We will provide a detailed description in the dataset section in V.A. 
+Thank you for your suggestion. In our exmperiemnt, **the number of** labels for IDS, CrossNet, VPN, and AndMal are 8, 20, 13, and 5. **Some datasets** (such as IDS and VPN) are indeed a bit old, but they are still **frequently used in recent works** (e.g., CCS2021\_nPrint, USENIX2023\_Rosetta, WWW2023\_TFE-GNN, COSE2023\_Adaptive, KDD2022\_FlowFormer), so we also consider them for evaluation. The details of the evaluation dataset will be add to Section V in the revision together with the data table.
 
 ### To Reviewer\#B\#C\#D: Robustness and Adversarial Attack
 
-We evaluate the robustness of TrafficScope against various forms of adversarial attacks (USENIX\_BLANKET, JSAC\_Manipulator, TIFS\_Prism) and evasion attacks (Insertion and Evasion from NDSS\_SymTCP and CCS\_Themis). Regardless of whether we set the attack ratio to 50\% or 100\%, the results show that TrafficScope is the most robust on all four datasets, with a $\sim$10\% higher accuracy and F1 score than baselines. This is due to TrafficScope's ability to combine contextual information for analysis, reducing the impact of a single flow being tampered with. Detailed results are reported as follows. 
+We thank the reviewers for the insightful suggestion. During the rebuttlal phase, we conducted extention evaluation of **the robustness of TrafficScope against various forms of adversarial attacks** (USENIX\_BLANKET, JSAC\_Manipulator, TIFS\_Prism) and evasion attacks (Insertion and Evasion from NDSS\_SymTCP and CCS\_Themis). Regardless of whether we set the attack ratio to 50\% or 100\%, the results show that **TrafficScope is the most robust on all four datasets**, with a $\sim$10\% higher accuracy and F1 score than baselines. This is due to TrafficScope's ability to combine contextual information for analysis, **mitigating the impact of the FoI traffic being tampered with**. Detailed results are reported as follows. 
 
 ![crossnet](ids2017.png)
 
@@ -31,15 +26,21 @@ We evaluate the robustness of TrafficScope against various forms of adversarial 
 
 ### To Reviewer\#B\#D: Concept Drift Evaluation
 
-For the cross-dataset experiments of V.F in the manuscript, we further supplement to clarify the concerns about concept drift. We supplement the experimental results of the baseline model in three cross-dataset scenarios, and it is clear that TrafficScope outperforms the baseline by $>$15\% accuracy and F1 score. Detailed results are reported as follows. Meanwhile, we conducted ablation experiments on the drift of content and FoI. The results show that when only FoI drifts or context drifts, the performance of TrafficScope is only slightly affected. In real scenarios, the occurrence of concept drift is gradual, the background traffic and FoI may not change suddenly simultaneously. In addition, some new research (NDSS2023\_OWAD) on drift sample adaptation can also be combined with TrafficScope, and we will supplement these descriptions. 
+For the cross-dataset experiments of V.F in the manuscript, **we further supplement to clarify the concerns about concept drift**. We **supplement the experimental results of the baseline model** in three cross-dataset scenarios, and it is clear that **TrafficScope outperforms the baseline by $>$15\% accuracy and F1 score**. Detailed results are reported as follows.
 
 ![crossnet](data_pollute.png)
 
+Meanwhile, **we conducted ablation experiments on the drift of content and FoI**. The results show that when only FoI drifts or context drifts, **the performance of TrafficScope is only slightly affected**. In real scenarios, the occurrence of concept drift is gradual, the background traffic and FoI may not change suddenly simultaneously. In addition, some new research (NDSS2023\_OWAD) on drift sample adaptation can also be combined with TrafficScope, and we will supplement these descriptions. 
+
 ### To Reviewer\#C: For Extended Experiments
 
-Given that nPrint integrates automated machine learning (AutoML), intuitively, standard machine learning should not perform as well as nPrint when the features are the same. In addition, we fed the hidden feature representation of TrafficScope to five standard ML models. The results showed an improvement compared to the baseline. Therefore, we can conclude that the performance of TrafficScope benefits from the feature extraction of context + FoI on the one hand, and from the tailor-made Transformer and cross-attention mechanism on the other. pVoxel focuses on identifying false positives for existing ML-based traffic detection systems, and we will discuss its combination with TrafficScope. TrafficScope is currently mainly applied to raw PCAP traffic for analysis, we will add some discussions on its application to the large-scale DARPA OpTC dataset with Zeek logs to provide more insights. 
+Given that nPrint [CCS2021\_nPrint] **integrates automated machine learning (AutoML)**, intuitively, standard machine learning should not perform as well as nPrint when the features are the same. In addition, we **fed the hidden feature representation of TrafficScope to five standard ML models**. The results showed an improvement compared to the baseline. Therefore, we can conclude that **the performance of TrafficScope benefits from the feature extraction of context + FoI** on the one hand, and from **the tailor-made Transformer and cross-attention mechanism** on the other. pVoxel focuses on identifying false positives for existing ML-based traffic detection systems, and we will discuss its combination with TrafficScope. TrafficScope is currently mainly applied to raw PCAP traffic for analysis, we will add some discussions on its application to the large-scale DARPA OpTC dataset with Zeek logs to provide more insights. 
 
 ![crossnet](ml.png)
+
+### To Reviewer\#D\#A: About Manuscript Writing
+
+We are grateful to reviewer D for constructive comments on the writing. Empty connection floods are DDoS attacks designed to saturate the targeted open port’s sockets, **its attack traffic is no different from the normal three-way handshake** (refer to https://kb.mazebolt.com/knowledgebase/empty-connection-flood/). **We will reorganize the section II into Backound/Preliminary knowledge for a better presentation. We will reshape the presentation of the adversary model and assumptions and avoid using confusing sentences.** Intrusion detection includes both benign traffic and attack traffic. VPN dataset does not involve attack traffic. **We will provide a detailed description in the dataset section in V.A. and revised the expression accordingly.** 
 
 **We express our sincere gratitude to all reviewers for their valuable time and constructive comments, which indeed helped us to further improve the manuscript.**
 
